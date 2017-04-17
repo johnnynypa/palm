@@ -168,8 +168,6 @@ app.post('/eliLinea', urlencodedParser, function(req, res){
   }
 });
 
-
-//Para lo ultimo aun no esta terminado, tiene errores... ///////////////////////////////////////////
 app.post('/eliminarLote', urlencodedParser, function(req, res){
   if(sessionIniciada(req)){
     req.session.user.finca.lote[0].forEach(function(val) {
@@ -184,6 +182,20 @@ app.post('/eliminarLote', urlencodedParser, function(req, res){
     });
   }else{
     res.end();
+  }
+});
+
+// ==================================================================================================
+// Registrar
+
+app.get("/newLote/:id",urlencodedParser, function(req, res){
+  if(sessionIniciada(req) && req.params.id && req.session.user.finca.id == req.params.id){
+    
+    res.render('createLote', {
+      session : req.session.user
+    });
+  }else{
+    res.redirect('/');
   }
 });
 

@@ -16,6 +16,10 @@ function irLote(id){
     })
 }
 
+function newLote(id){
+    window.location.href = "/newLote/"+id;
+}
+
 function eliminarLote(id){
     $.ajax({
         url: "/eliminarLote",

@@ -1,0 +1,8 @@
+extends layout.pug
+block head
+
+block navegacion
+	include nav.pug
+block contenedor
+	h1 Finca #{session.finca.name}
+	h2 Registrar nuevo lote

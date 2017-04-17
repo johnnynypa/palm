@@ -8,6 +8,7 @@ block navegacion
 block contenedor
   if session 
     include main.pug
-    include lotes.pug
+    include tables/lotes.pug
+    p #{JSON.stringify(session)}
   else
     include login.pug
