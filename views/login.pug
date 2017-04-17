@@ -1,0 +1,14 @@
+﻿script(src="public/js/login.js")
+form(role="form", onsubmit="return false;" )
+  h1 Iniciar Sesion
+  div.form-group
+    label(for="userName") Nombre de usuario
+    input(type="text").form-control#userName
+  div.form-group
+    label(for="password") Contraseña
+    input(type="password").form-control#psw
+  div.form-group
+    button(type="submit", onClick="iniciarSession()").btn.btn-default Iniciar
+  div.form-group
+    strong
+      span(style= "Display:none")#myAlert Credenciales incorrectas

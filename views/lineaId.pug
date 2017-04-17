@@ -1,0 +1,8 @@
+extends layout.pug
+block navegacion
+	include nav.pug
+block contenedor
+	h3 Linea ##{lineaNumero}
+	//- h3 #{JSON.stringify(palmas)}
+	include tables/palma.pug
+	

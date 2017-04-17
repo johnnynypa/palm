@@ -1,0 +1,39 @@
+block TablePalma
+	div.table-responsive.containerPalma
+		table.table
+			thead
+				tr
+					th
+						h3 Palmas
+					th
+						button.btn.btn-success(type='button') Crear Palma
+				tr
+					th
+						| Numero
+					th
+						| Geografica N.
+					th
+						| Geografica W.
+					th
+						| Plana N.
+					th
+						| Plana W.
+					th
+						| Opciones
+			tbody
+				each palma, index in palmas
+					tr
+						td
+							p 
+								strong #{palma.number}
+						td
+							p #{palma.cGeograficaN}
+						td
+							p #{palma.cGeograficaW}
+						td
+							p #{palma.cPlanaN}
+						td
+							p #{palma.cPlanaW}
+						td
+							button.btn.btn-danger(type='button', data-id = palma.idPalma, onClick = "eliminarPalma('" + palma.idPalma + "," + palma.number+"')")
+								| Eliminar

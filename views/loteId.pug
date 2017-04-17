@@ -1,0 +1,18 @@
+extends layout.pug
+block head
+	script(src="/public/js/lineas.js")
+block navegacion
+	include nav.pug
+block contenedor
+	- var i = 0;
+	- while(session.finca.lote[0][i]){
+		- if(session.finca.lote[0][i].id == loteId){
+			h1 Lote ##{session.finca.lote[0][i].numero}
+			- break;
+		-}
+		- i++;
+	- }
+	block tableLineas
+		include tables/lineas.pug 
+
+//- h2 #{JSON.stringify(lineas)}

@@ -1,0 +1,13 @@
+extends layout.pug
+block navegacion
+  include nav.pug
+  if session
+    block head
+      link(rel='stylesheet', type='text/css', media='screen', href='/public/css/lote.css')
+      script(src="public/js/lote.js")
+block contenedor
+  if session 
+    include main.pug
+    include lotes.pug
+  else
+    include login.pug
