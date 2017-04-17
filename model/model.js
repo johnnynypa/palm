@@ -28,6 +28,16 @@ var findLotes = function(idFinca, callback){
     })
 }
 
+var eliminarPalma = function(idPalma, callback){
+    console.log(conexion.query({
+        sql:"DELETE FROM palma WHERE idPalma = ?",
+        values: [idPalma]
+    }, function(err, result){
+        console.log(err);
+        callback(err, result);
+    }));
+}
+
 var findFinca = function(id, callback){
     conexion.query({
         sql: "SELECT name FROM finca WHERE idFinca = ?",
@@ -160,3 +170,4 @@ module.exports.findLotes = findLotes;
 module.exports.eliminarLote = eliminarLote;
 module.exports.loadLineasByLote = loadLineasByLote;
 module.exports.loadPalmasByLinea = loadPalmasByLinea;
+module.exports.eliminarPalma = eliminarPalma;

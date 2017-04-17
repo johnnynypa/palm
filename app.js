@@ -92,6 +92,7 @@ app.get('/linea/:numero', function(req, res){
     if(req.session.lineaId && (req.session.lineaNumber == req.params.numero)){
       //Cargar informacion (las palmas de la linea) y enviar
       Modelo.loadPalmasByLinea(req.session.lineaId, function(err, result){
+        req.session.palmasenUso = result;
         res.render('lineaId', {
           pagekey: 'Linea',
           session: req.session.user,
@@ -103,6 +104,8 @@ app.get('/linea/:numero', function(req, res){
     }else{
       res.send(404);
     }
+  }else{
+    res.redirect('/');
   }
 });
 
@@ -126,6 +129,26 @@ app.post('/IniciarSession', urlencodedParser, function(req, res){
     res.send('0');
   });
 });
+
+// =================================================================================================
+//ELIMINACIONES
+
+app.post('/eliPalma', urlencodedParser, function(req, res){
+  if(sessionIniciada(req) && req.body.id){
+    req.session.palmasenUso.forEach(function(item, index){
+      if(item.idPalma == req.body.id){
+        Modelo.eliminarPalma(item.idPalma, function(err, result){
+          actualizarDataUser(req, function(){
+            res.send({ok:true});
+          });
+        });
+      }
+    });
+  }else{
+    res.send({ok:false});
+  }
+})
+
 
 //Para lo ultimo aun no esta terminado, tiene errores... ///////////////////////////////////////////
 app.post('/eliminarLote', urlencodedParser, function(req, res){
@@ -162,4 +185,13 @@ function sessionIniciada(req){
     return true;
   }
   return false;
+}
+
+function actualizarDataUser(req, callback){
+  Modelo.loadUser(req.session.user.name, req.session.user.password, function(err, result){
+    if(result){
+      req.session.user = result;
+      return callback();
+    }
+  });
 }
