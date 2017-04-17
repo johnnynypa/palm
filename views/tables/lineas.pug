@@ -18,7 +18,7 @@ block tableLineas
 						td
 							p #{linea.number}
 						td
-							button.btn.btn-primary(type="button", data-id = linea.idLinea, onClick = "irLinea(" + linea.idLinea + "," + linea.number+")")
+							button.btn.btn-primary(type="button", data-id = linea.idLinea, onClick = "irLinea(" + linea.idLinea + "," + linea.number + ")")
 								| Ver
-							button.btn.btn-danger(type='button', data-id = linea.idLinea, onClick = "eliminarLinea('" + linea.idLinea + "," + linea.number+"')")
+							button.btn.btn-danger(type='button', data-id = linea.idLinea, onClick = "eliminarLinea(" + linea.idLinea + ")")
 								| Eliminar

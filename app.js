@@ -55,6 +55,7 @@ app.get('/lote/:id', function(req, res){
     if( req.session.loteId && (req.session.loteId == req.params.id)){
       //Cargar informacion(Las lineas pertenecientes al lote) y enviar
       Modelo.loadLineasByLote(req.session.loteId, function(err, result){
+        req.session.lineasUso = result;
         res.render('loteId', {
           pagekey: 'Lotes',
           session: req.session.user,
@@ -87,7 +88,7 @@ app.post('/linea', urlencodedParser, function(req, res){
   }
 });
 
-app.get('/linea/:numero', function(req, res){
+app.get('/linea/:numero',urlencodedParser, function(req, res){
   if(sessionIniciada(req)){
     if(req.session.lineaId && (req.session.lineaNumber == req.params.numero)){
       //Cargar informacion (las palmas de la linea) y enviar
@@ -147,34 +148,42 @@ app.post('/eliPalma', urlencodedParser, function(req, res){
   }else{
     res.send({ok:false});
   }
-})
+});
+
+app.post('/eliLinea', urlencodedParser, function(req, res){
+  if(sessionIniciada(req) && req.body.id ){
+    req.session.lineasUso.forEach(function(item, index){
+      if(item.idLinea == req.body.id){
+        Modelo.eliminarLinea(item.idLinea, function(){
+          console.log("entro");
+          actualizarDataUser(req, function(){
+            res.send({ok:true});
+          });
+          return;
+        });
+      }
+    });
+  }else{
+    res.send({ok:false});
+  }
+});
 
 
 //Para lo ultimo aun no esta terminado, tiene errores... ///////////////////////////////////////////
 app.post('/eliminarLote', urlencodedParser, function(req, res){
-  console.log("Here 1");
-  
   if(sessionIniciada(req)){
     req.session.user.finca.lote[0].forEach(function(val) {
       if(val.id == req.body.id){
-        parsers.parsearLote(val, function(LoteParseado){
-          Modelo.eliminarLote(LoteParseado, function(err){
-            console.log(err);
-            //Cargamos la nueva informacion del usuario
-            Modelo.loadUser(req.session.user.name, req.session.password, function(err, result){
-              if(result){
-                req.session.user = result;
-                res.send('1');
-              }
-              res.send('0');
-            });
-          });
+        Modelo.eliminarLote(req.body.id, function(){
+          actualizarDataUser(req, function(){
+            res.send({ok: true});
+            return;
+          })
         });
-        return;
-      }else{
-        res.end();
       }
-    }, this)
+    });
+  }else{
+    res.end();
   }
 });
 

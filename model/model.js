@@ -28,14 +28,36 @@ var findLotes = function(idFinca, callback){
     })
 }
 
+var eliminarPalmasOfLinea = function(idLinea, callback){
+    conexion.query({
+        sql: "DELETE FROM palma WHERE Linea_idLinea = ?",
+        values: [idLinea]
+    }, function(err, result){
+        if(err) console.log(err);
+        callback(idLinea);
+    })
+}
+
+var eliminarLinea = function(idLinea, callback){
+    eliminarPalmasOfLinea(idLinea, function(idLinea){
+        conexion.query({
+            sql: "DELETE FROM linea WHERE idLinea = ?",
+            values: [idLinea]
+        }, function(err, result){
+            if(err) console.log(err);
+            callback();
+        });
+    })
+}
+
 var eliminarPalma = function(idPalma, callback){
-    console.log(conexion.query({
+    conexion.query({
         sql:"DELETE FROM palma WHERE idPalma = ?",
         values: [idPalma]
     }, function(err, result){
-        console.log(err);
+        if(err) console.log(err);
         callback(err, result);
-    }));
+    });
 }
 
 var findFinca = function(id, callback){
@@ -81,52 +103,41 @@ var loadLineasByLote = function(idLote, callback){
     })
 }
 
-var eliminarLinea = function(linea, callback){
-}
-
-var loadAllLineaByLote = function(lote, callback){
+var loadAllLineaByLote = function(idLote, callback, callbackFn){
     conexion.query({
         sql: "SELECT idLinea, number FROM linea WHERE Lote_idLote = ?",
         timeout: 10000,
-        values: [lote.getId()]
+        values: [idLote]
     }, function(err, results){
         if(err) return callback(err, null);
-        if(results) return callback(null, results);
-        return callback(null, null);
+        callback(null, results, callbackFn);
+			  
     })
 }
 
-var eliminarLote = function(lote, callback){
-    loadAllLineaByLote(lote, function(err, lineas){
-        if(err) return callback(err, lineas);
-
-        if(lineas){
-            lineas.forEach(function(element){
-                //Borramos las palmas de la linea
-                conexion.query({
-                    sql: "DELETE FROM palma WHERE Linea_idLinea = ?",
-                    values: [element.idLinea]
-                }, function(err, result){
-                    if(err) console.log(err);
-                    if(result) console.log(result);
-                });
-            }, function(){
-                //borrar la linea
-                conexion.query({
-                    sql: "DELETE FROM linea WHERE Lote_idLote = ?",
-                    values: [element.Lote_idLote]
-                }, function(err, result){
-                    if(err) console.log(err);
-                    if(result) console.log(result);
-                });
-            }, function(){
-                //eliminar el lote
-                lote.delete()
-                return callback(null, true);
-            });
-        }
-    });
+var elimDatosLote = function(idLote, callback){
+	loadAllLineaByLote(idLote, function(err, results){
+		if(err) console.log(err);
+		for (item in results){
+			eliminarLinea(item.idLinea);
+		}
+		callback();
+	});
 }
+
+var eliminarLote = function(idLote, callback){
+	elimDatosLote(idLote, function(){
+		//Despues de eliminar todas sus lineas y palmas se elimina el lote
+		conexion.query({
+			sql: "DELETE FROM lote WHERE idLote = ?",
+			values: [idLote]
+		}, function(err){
+			if(err) console.log(err);
+			return callback();
+		});
+	});
+}
+
 
 var loadUser = function(userName, psw, callback){
     conexion.query({
@@ -171,3 +182,4 @@ module.exports.eliminarLote = eliminarLote;
 module.exports.loadLineasByLote = loadLineasByLote;
 module.exports.loadPalmasByLinea = loadPalmasByLinea;
 module.exports.eliminarPalma = eliminarPalma;
+module.exports.eliminarLinea = eliminarLinea;

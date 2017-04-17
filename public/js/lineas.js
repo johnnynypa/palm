@@ -15,3 +15,21 @@ function irLinea(id, num){
         }
     })
 }
+
+function eliminarLinea(id){
+    $.ajax({
+        url: "/eliLinea",
+        method: "POST",
+        data: {id: id},
+        error: function(){
+            alert("Ha ocurrido un error, cierre session y vuelva a intentarlo");
+        },
+        success: function(response){
+            if(response.ok){
+                location.reload();
+            }else{
+                alert("La Linea no se ha podido eliminar");
+            }
+        }
+    })
+}
