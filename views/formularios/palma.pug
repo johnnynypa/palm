@@ -1,0 +1,19 @@
+block formulario
+	form(role='form')
+		.form-group
+			label(for='numeroNewPalma') Numero
+			input#numeroNewPalma.form-control(type='text', required="", placeholder='Introduce el numero de la nueva palma')
+		.form-group
+			label(for='geoN') Coo. geografica N
+			input#geoN.form-control(type='text', required="", placeholder='Introduce la coordenada geografica N')
+		.form-group
+			label(for='geoW') Coo. geografica W
+			input#geoW.form-control(type='text', required="", placeholder='Introduce la coordenada geografica W')
+		.form-group
+			label(for='planaN') Coo. plana N
+			input#planaN.form-control(type='text', required="", placeholder='Introduce la coordenada plana N')
+		.form-group
+			label(for='planaW') Coo. plana W
+			input#planaW.form-control(type='text', required="", placeholder='Introduce la coordenada plana W')
+		.form-group
+			button.btn.btn-primary(type='submit', onSubmit="return false;" , onClick="createPalma()") Registrar

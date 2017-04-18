@@ -1,5 +1,4 @@
 function createLote(){
-    alert($("#numeroNewLote").val());
     $.ajax({
         url: "/newLote",
         method: "POST",

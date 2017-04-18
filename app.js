@@ -188,9 +188,43 @@ app.post('/eliminarLote', urlencodedParser, function(req, res){
 // ==================================================================================================
 // Registrar
 
+app.get('/newPalma', urlencodedParser, function(req, res){
+  if(sessionIniciada(req)){
+    res.render('createPalma', {session: req.session.user});
+  }else{
+    res.redirect("/");
+  }
+});
+
+app.post('/newPalma', urlencodedParser, function(req, res){
+  if(sessionIniciada(req) && req.session.lineaId && req.body.numero && req.body.geoN && req.body.geoW && req.body.planaN && req.body.planaW){
+    if(!existPalmaByNumero(req.body.numero, req.session.palmasenUso)){
+      Modelo.crearPalma(
+        req.body.numero,
+        req.session.lineaId,
+        req.body.geoN,
+        req.body.geoW,
+        req.body.planaN,
+        req.body.planaW,
+        function(){
+          actualizarDataUser(req, function(){
+            res.send({ok: true, url: "/linea/"+req.session.lineaNumber});
+          })
+        }
+      )
+    }else{
+      res.send({ok:false});
+    }
+  }else{
+    res.send({ok:false});
+  }
+});
+
 app.get('/newLinea', urlencodedParser, function(req, res){
   if(sessionIniciada(req)){
     res.render('createLinea', {session: req.session.user});
+  }else{
+    res.redirect("/");
   }
 });
 
@@ -266,6 +300,15 @@ function exitsLotebyNumero(numero, lotes){
 function existLineaByNumero(numero, lineas){
   for (var index in lineas){
     if(numero == lineas[index].number){
+      return true;
+    }
+  }
+  return false;
+}
+
+function existPalmaByNumero(numero, palmas){
+  for (var index in palmas){
+    if(numero == palmas[index].number){
       return true;
     }
   }

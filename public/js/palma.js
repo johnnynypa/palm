@@ -16,3 +16,7 @@ function eliminarPalma(id){
         }
     });
 }
+
+function irNewPalma(){
+    window.location.href = "/newPalma";
+}

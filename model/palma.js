@@ -15,8 +15,7 @@ module.exports = class Palma{
     }
 
     validaDatos(){
-
-        if((this.cGeograficaN !=null) && (this.cGeograficaW !=null) && (this.cPlanaN!=null) && (this.cPlanaW!=null) && (this.linea!=null) && (this.numero!=null)){
+        if(this.cGeograficaN && this.cGeograficaW && this.cPlanaN && this.cPlanaW && this.linea && this.numero){
             return true;
         }
         return false;
@@ -25,7 +24,7 @@ module.exports = class Palma{
     save(){
         if(this.validaDatos()){
             var sentencia = "";
-            if(this.id != null){
+            if(this.id){
                 //UPDATE
                 sentencia = "UPDATE palma SET number = ?, cGeograficaN = ?, cGeograficaW = ?, cPlanaN = ?, cPlanaW = ? WHERE idPalma = "+ this.id +" AND Linea_idLinea = ?";
             }else{
@@ -35,7 +34,7 @@ module.exports = class Palma{
             conexion.query({
                 sql: sentencia,
                 timeout: 20000, //20 segundos,
-                values: [this.numero, this.cGeograficaN, this.cGeograficaW, this.cPlanaN, this.cPlanaW, this.linea.id]
+                values: [this.numero, this.cGeograficaN, this.cGeograficaW, this.cPlanaN, this.cPlanaW, this.linea.getId()]
             }, function(error){
                 if(error){
                     console.log("Error: "+ error);
@@ -57,7 +56,7 @@ module.exports = class Palma{
     }
     
     getCPlanaW(){
-        return cPlanaW;
+        return this.cPlanaW;
     }
 
     setCPlanaN(c){
@@ -65,7 +64,7 @@ module.exports = class Palma{
     }
     
     getCPlanaN(){
-        return cPlanaN;
+        return this.cPlanaN;
     }
 
     setCGeograficaW(c){
@@ -73,7 +72,7 @@ module.exports = class Palma{
     }
     
     getCGeograficaW(){
-        return cGeograficaW;
+        return this.cGeograficaW;
     }
 
     setCGeograficaN(c){

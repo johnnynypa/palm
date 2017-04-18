@@ -1,0 +1,12 @@
+extends layout.pug
+block head
+	script(src="/public/js/newPalma.js")
+block navegacion
+	include nav.pug
+block contenedor
+	h1 Finca #{session.finca.name}
+	h2 
+		p.text-center
+			| Registrar nueva palma
+	block formulario
+		include formularios/palma.pug

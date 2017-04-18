@@ -125,6 +125,19 @@ var elimDatosLote = function(idLote, callback){
 	});
 }
 
+var crearPalma = function(numero, idLinea, geoN, geoW, planaN, planaW, callback){
+    var palma = new Palma();
+    palma.setNumero(numero);
+    palma.setLinea(new Linea());
+    palma.getLinea().setId(idLinea);
+    palma.setCGeograficaN(geoN);
+    palma.setCGeograficaW(geoW);
+    palma.setCPlanaN(planaN);
+    palma.setCPlanaW(planaW);
+    palma.save();
+    callback();
+}
+
 var crearLinea = function(numero, idLote, callback){
     var li = new Linea();
     li.setLote(new Lote());
@@ -202,3 +215,4 @@ module.exports.eliminarPalma = eliminarPalma;
 module.exports.eliminarLinea = eliminarLinea;
 module.exports.crearLote = crearLote;
 module.exports.crearLinea = crearLinea;
+module.exports.crearPalma = crearPalma;

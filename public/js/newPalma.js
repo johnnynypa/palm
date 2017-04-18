@@ -1,8 +1,14 @@
-function createLinea(){
+function createPalma(){
     $.ajax({
-        url: "/newLinea",
+        url: "/newPalma",
         method: "POST",
-        data: {numero: $("#numeroNewLinea").val()},
+        data: {
+            numero: $("#numeroNewPalma").val(),
+            geoN : $("#geoN").val(),
+            geoW : $("#geoW").val(),
+            planaN : $("#planaN").val(),
+            planaW : $("#planaW").val(),
+        },
         error: function(){
             alert("Ha ocurrido un error");
         },
