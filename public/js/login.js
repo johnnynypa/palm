@@ -1,4 +1,6 @@
 function iniciarSession(){
+		alert($('#userName').val());
+		alert($('#psw').val());
   $.ajax({
     url:"/IniciarSession",
     method: 'POST',

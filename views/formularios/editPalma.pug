@@ -1,0 +1,18 @@
+block formulario
+  form.form(role='form')
+    .form-group
+      label(for='Numero') Numero
+      input#NUmero.form-control(type='text', value=numero, placeholder='', readonly="")
+    .form-group
+      label(for='geoN') Coo. Geofrafica N.
+      input#geoN.form-control(type='text', placeholder='Coordenada Geofrafica N')
+    .form-group
+      label(for='geoW') Coo. Geofrafica W.
+      input#geoW.form-control(type='text', placeholder='Coordenada Geofrafica W')
+    .form-group
+      label(for='planaN') Coo. Plana N.
+      input#planaN.form-control(type='text', placeholder='Coordenada Plana N')
+    .form-group
+      label(for='planaW') Coo. Plana W.
+      input#planaW.form-control(type='text', placeholder='Coordenada Plana W')
+    button.btn.btn-default(type='submit', onSubmit="return false;", onClick="edit("+idPalma+","+numero +")") Editar

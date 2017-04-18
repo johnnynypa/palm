@@ -5,3 +5,5 @@ block formulario
 			input#numeroNewLinea.form-control(type='text', required="", placeholder='Introduce el numero de la nueva linea')
 		.form-group
 			button.btn.btn-primary(type='submit', onSubmit="return false;" , onClick="createLinea()") Registrar
+			button(onClick="volver("+loteId+")").btn.btn-default
+				|Volver

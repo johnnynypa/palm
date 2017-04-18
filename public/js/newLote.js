@@ -3,12 +3,12 @@ function createLote(){
         url: "/newLote",
         method: "POST",
         data: {numero: $("#numeroNewLote").val()},
-        error: function(){
-            alert("Ha ocurrido un error");
+        error: function(err){
+            
         },
         success: function(response){
             if(response.ok){
-                window.location.href = window.history.back();
+                window.location.href = '/';
             }else{
                 alert("Error en los datos");
             }

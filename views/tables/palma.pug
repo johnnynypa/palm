@@ -35,5 +35,7 @@ block TablePalma
 						td
 							p #{palma.cPlanaW}
 						td
+							button.btn.btn-default(type='button', data-id = palma.idPalma, onClick = "editPalma(" + palma.idPalma + ","+palma.number+")")
+								| Editar
 							button.btn.btn-danger(type='button', data-id = palma.idPalma, onClick = "eliminarPalma(" + palma.idPalma + ")")
 								| Eliminar

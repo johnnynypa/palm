@@ -12,12 +12,14 @@ div.table-responsive.containerLote
 				th
 					| Opciones
 		tbody
-			each lote, index in lotes
-				tr
-					td
-						p #{lote.numero}
-					td
-						button.btn.btn-primary(type="button", data-id = lote.id, onClick = "irLote('" + lote.id + "')")
-							| Ver
-						button.btn.btn-danger(type='button', data-id = lote.id, onClick = "eliminarLote('" + lote.id + "')")
-							| Eliminar
+			-if(lotes){
+				each lote, index in lotes
+					tr
+						td
+							p #{lote.numero}
+						td
+							button.btn.btn-primary(type="button", data-id = lote.id, onClick = "irLote('" + lote.id + "')")
+								| Ver
+							button.btn.btn-danger(type='button', data-id = lote.id, onClick = "eliminarLote('" + lote.id + "')")
+								| Eliminar
+			-}

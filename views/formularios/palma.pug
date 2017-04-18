@@ -17,3 +17,5 @@ block formulario
 			input#planaW.form-control(type='text', required="", placeholder='Introduce la coordenada plana W')
 		.form-group
 			button.btn.btn-primary(type='submit', onSubmit="return false;" , onClick="createPalma()") Registrar
+			button(onClick="volver("+lineaId+")").btn.btn-default
+				|Volver

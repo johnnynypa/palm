@@ -23,11 +23,16 @@ app.use(session({
 }));
 
 app.get('/', function(req, res){
-  res.render('index', {
-    pagekey: 'Inicio',
-    session: req.session.user,
-    lotes: req.session.user ? req.session.user.finca.lote[0] : null
-  });
+	if(req.session.user){
+  		res.render('index', {
+   	 	pagekey: 'Inicio',
+    	session: req.session.user,
+    	lotes: req.session.user ? req.session.user.finca.lote[0] : null
+ 		})
+	}else{
+		res.render('index', {
+		pagekey: 'Inicio'})
+	}
 });
 
 app.get('/logout', function(req, res){
@@ -190,7 +195,7 @@ app.post('/eliminarLote', urlencodedParser, function(req, res){
 
 app.get('/newPalma', urlencodedParser, function(req, res){
   if(sessionIniciada(req)){
-    res.render('createPalma', {session: req.session.user});
+    res.render('createPalma', {session: req.session.user, lineaId: req.session.lineaNumber});
   }else{
     res.redirect("/");
   }
@@ -222,7 +227,7 @@ app.post('/newPalma', urlencodedParser, function(req, res){
 
 app.get('/newLinea', urlencodedParser, function(req, res){
   if(sessionIniciada(req)){
-    res.render('createLinea', {session: req.session.user});
+    res.render('createLinea', {session: req.session.user, loteId:req.session.loteId,});
   }else{
     res.redirect("/");
   }
@@ -263,12 +268,25 @@ app.post('/newLote', urlencodedParser, function(req, res){
         });
       });
     }else{
-      res.send({ok:false});  
+      res.send({ok:false});
     }
   }else{
     res.send({ok:false});
   }
 });
+
+
+//***********************************************************************************
+//EDICIONES
+
+app.get('/editPalma/:id/:num', urlencodedParser, function(req, res){
+  if(sessionIniciada(req) && req.params.id && req.params.num){
+    res.render('editPalma', {idPalma:req.params.id, numero: req.params.num});
+  }else{
+    res.redirect('/');
+  }
+});
+
 
 app.listen(8000);
 

@@ -10,7 +10,7 @@ function createPalma(){
             planaW : $("#planaW").val(),
         },
         error: function(){
-            alert("Ha ocurrido un error");
+
         },
         success: function(response){
             if(response.ok){
@@ -20,4 +20,8 @@ function createPalma(){
             }
         }
     });
+}
+
+function volver(id){
+  window.location.href = "/linea/"+id;
 }

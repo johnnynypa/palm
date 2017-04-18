@@ -1,0 +1,10 @@
+extends layout.pug
+block navegacion
+  include nav.pug
+block head
+  script(src="/public/js/editPalma.js")
+block contenedor
+  h1
+    Editar Palma
+  block formulario
+    include formularios/editPalma.pug

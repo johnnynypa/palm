@@ -4,7 +4,7 @@ function createLinea(){
         method: "POST",
         data: {numero: $("#numeroNewLinea").val()},
         error: function(){
-            alert("Ha ocurrido un error");
+
         },
         success: function(response){
             if(response.ok){
@@ -14,4 +14,8 @@ function createLinea(){
             }
         }
     });
+}
+
+function volver(id){
+  window.location.href = "/lote/"+id;
 }

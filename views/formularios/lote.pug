@@ -5,3 +5,5 @@ block formulario
 			input#numeroNewLote.form-control(type='text', required="", placeholder='Introduce el numero del nuevo lote')
 		.form-group
 			button.btn.btn-primary(type='submit', onSubmit="return false;" , onClick="createLote()") Registrar
+			button(onClick="window.location.href = '/'").btn.btn-default
+				|Volver

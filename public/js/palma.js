@@ -20,3 +20,7 @@ function eliminarPalma(id){
 function irNewPalma(){
     window.location.href = "/newPalma";
 }
+
+function editPalma(id, num){
+  window.location.href = "/editPalma/"+id+"/"+num
+}
