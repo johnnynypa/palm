@@ -9,6 +9,6 @@ block contenedor
   if session 
     include main.pug
     include tables/lotes.pug
-    p #{JSON.stringify(session)}
+    //- p #{JSON.stringify(session}
   else
     include login.pug

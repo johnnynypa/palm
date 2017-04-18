@@ -190,12 +190,27 @@ app.post('/eliminarLote', urlencodedParser, function(req, res){
 
 app.get("/newLote/:id",urlencodedParser, function(req, res){
   if(sessionIniciada(req) && req.params.id && req.session.user.finca.id == req.params.id){
-    
     res.render('createLote', {
       session : req.session.user
     });
   }else{
     res.redirect('/');
+  }
+});
+
+app.post('/newLote', urlencodedParser, function(req, res){
+  if(sessionIniciada(req) && req.body.numero){
+    if(!exitsLotebyNumero(req.body.numero, req.session.user.finca.lote[0])){
+      Modelo.crearLote(req.body.numero, req.session.user.finca.id, function(){
+        actualizarDataUser(req, function(){
+          res.send({ok: true});
+        });
+      });
+    }else{
+      res.send({ok:false});  
+    }
+  }else{
+    res.send({ok:false});
   }
 });
 
@@ -215,4 +230,13 @@ function actualizarDataUser(req, callback){
       return callback();
     }
   });
+}
+
+function exitsLotebyNumero(numero, lotes){
+  for (var item in lotes){
+    if(numero == lotes[item].numero){
+      return true;
+    }
+  }
+  return false;
 }

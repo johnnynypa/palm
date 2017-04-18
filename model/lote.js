@@ -10,14 +10,14 @@ module.exports = class Lote{
     }
     
     validaDatos(){
-        if((this.idFinca) && (this.id) && (this.numero)){
+        if((this.idFinca) && (this.numero)){
             return true;
         }
         return false;
     }
 
     save(){
-        if(validaDatos()){
+        if(this.validaDatos()){
             var sentencia ="";
             if(this.id){
                 //UPDATE

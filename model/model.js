@@ -125,6 +125,14 @@ var elimDatosLote = function(idLote, callback){
 	});
 }
 
+var crearLote = function(numero, idFinca, callback){
+    var lo = new Lote();
+    lo.setIdFinca(idFinca);
+    lo.setNumero(numero);
+    lo.save();
+    callback();
+}
+
 var eliminarLote = function(idLote, callback){
 	elimDatosLote(idLote, function(){
 		//Despues de eliminar todas sus lineas y palmas se elimina el lote
@@ -183,3 +191,4 @@ module.exports.loadLineasByLote = loadLineasByLote;
 module.exports.loadPalmasByLinea = loadPalmasByLinea;
 module.exports.eliminarPalma = eliminarPalma;
 module.exports.eliminarLinea = eliminarLinea;
+module.exports.crearLote = crearLote;

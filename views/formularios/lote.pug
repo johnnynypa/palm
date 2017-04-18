@@ -1,0 +1,7 @@
+block formulario
+	form(role='form')
+		.form-group
+			label(for='numeroNewLote') Numero
+			input#numeroNewLote.form-control(type='email', placeholder='Introduce el numero del nuevo lote')
+		.form-group
+			button.btn.btn-primary(type='submit', onSubmit="return false;" , onClick="createLote()") Registrar
