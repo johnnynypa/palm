@@ -188,6 +188,28 @@ app.post('/eliminarLote', urlencodedParser, function(req, res){
 // ==================================================================================================
 // Registrar
 
+app.get('/newLinea', urlencodedParser, function(req, res){
+  if(sessionIniciada(req)){
+    res.render('createLinea', {session: req.session.user});
+  }
+});
+
+app.post('/newLinea', urlencodedParser, function(req, res){
+  if( sessionIniciada(req) && req.session.loteId && req.body.numero){
+    if(!existLineaByNumero(req.body.numero, req.session.lineasUso)){
+      Modelo.crearLinea(req.body.numero, req.session.loteId, function(){
+        actualizarDataUser(req, function(){
+          res.send({ok:true, url:"/lote/"+req.session.loteId});
+        });
+      });
+    }else{
+      res.send({ok:false});
+    }
+  }else{
+    res.send({ok:false});
+  }
+});
+
 app.get("/newLote/:id",urlencodedParser, function(req, res){
   if(sessionIniciada(req) && req.params.id && req.session.user.finca.id == req.params.id){
     res.render('createLote', {
@@ -235,6 +257,15 @@ function actualizarDataUser(req, callback){
 function exitsLotebyNumero(numero, lotes){
   for (var item in lotes){
     if(numero == lotes[item].numero){
+      return true;
+    }
+  }
+  return false;
+}
+
+function existLineaByNumero(numero, lineas){
+  for (var index in lineas){
+    if(numero == lineas[index].number){
       return true;
     }
   }

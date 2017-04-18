@@ -1,3 +1,7 @@
+function createLinea(){
+    window.location.href = "/newLinea";
+}
+
 function irLinea(id, num){
     $.ajax({
         url: "/linea/",

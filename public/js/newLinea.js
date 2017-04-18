@@ -1,15 +1,15 @@
-function createLote(){
-    alert($("#numeroNewLote").val());
+function createLinea(){
+    alert($("#numeroNewLinea").val());
     $.ajax({
-        url: "/newLote",
+        url: "/newLinea",
         method: "POST",
-        data: {numero: $("#numeroNewLote").val()},
+        data: {numero: $("#numeroNewLinea").val()},
         error: function(){
             alert("Ha ocurrido un error");
         },
         success: function(response){
             if(response.ok){
-                window.location.href = window.history.back();
+                window.location.href = response.url;
             }else{
                 alert("Error en los datos");
             }

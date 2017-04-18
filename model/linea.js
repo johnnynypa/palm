@@ -11,13 +11,13 @@ module.exports = class Linea{
     }
 
     validaDatos(){
-        if((this.id != null) && (this.numero != null) && (this.lote !=null) ){
+        if((this.numero != null) && (this.lote !=null) ){
             return true;
         }
         return false;
     }
     save(){
-        if(validaDatos()){
+        if(this.validaDatos()){
             var sentencia = "";
             if(this.id != null){
                 //UPDATE
@@ -29,7 +29,7 @@ module.exports = class Linea{
             conexion.query({
                 sql: sentencia,
                 timeout: 20000,
-                values: [this.numero, this.lote.getId]
+                values: [this.numero, this.lote.getId()]
             }, function(error){
                 if(error){
                     console.log(error);
